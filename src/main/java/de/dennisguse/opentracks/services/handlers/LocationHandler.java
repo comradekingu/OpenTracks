@@ -11,12 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.UnitConversions;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
 public class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
@@ -105,6 +108,14 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
         TrackPoint trackPoint = new TrackPoint(location, trackPointCreator.createNow());
         boolean isAccurate = trackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy);
         boolean isValid = LocationUtils.isValidLocation(location);
+
+        if (lastTrackPoint != null) {
+            double elapsedTime = trackPoint.getTime().minus(lastTrackPoint.getTime().toEpochMilli(), ChronoUnit.MILLIS).toEpochMilli() / 1000d;
+            double elapsedDistance = trackPoint.distanceToPrevious(lastTrackPoint).toM();
+            //Log.e("probando", "Speed (km/h): " + ((elapsedDistance / elapsedTime) * UnitConversions.MPS_TO_KMH));
+            //Log.e("probando", "Elapsed time: " + elapsedTime + " | Elapsed Distance: " + elapsedDistance);
+            trackPoint.setSpeed(elapsedDistance > 5.0 ? Speed.of(elapsedDistance / elapsedTime) : lastTrackPoint.getSpeed());
+        }
 
         if (gpsStatus != null) {
             gpsStatus.onLocationChanged(trackPoint);
