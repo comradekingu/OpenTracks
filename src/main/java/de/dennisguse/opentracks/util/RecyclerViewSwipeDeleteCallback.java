@@ -7,7 +7,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -30,11 +29,11 @@ abstract public class RecyclerViewSwipeDeleteCallback extends ItemTouchHelper.Ca
     public RecyclerViewSwipeDeleteCallback(Context context) {
         this.context = context;
         background = new ColorDrawable();
-        backgroundColor = context.getResources().getColor(R.color.colorBgDelete);
+        backgroundColor = context.getResources().getColor(R.color.colorBackgroundDelete);
         clearPaint = new Paint();
         clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         deleteDrawable = ContextCompat.getDrawable(this.context, R.drawable.ic_delete_forever_24dp);
-        deleteDrawable.setTint(context.getResources().getColor(R.color.colorFgDelete));
+        deleteDrawable.setTint(context.getResources().getColor(R.color.colorForegroundDelete));
         intrinsicWidth = deleteDrawable.getIntrinsicWidth();
         intrinsicHeight = deleteDrawable.getIntrinsicHeight();
     }

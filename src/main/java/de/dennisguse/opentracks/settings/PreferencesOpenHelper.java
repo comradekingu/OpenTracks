@@ -28,31 +28,32 @@ class PreferencesOpenHelper {
 
     private void onUpgrade() {
         PreferencesUtils.setInt(R.string.prefs_last_version_key, version);
-        switch (version) {
-            case 1:
-                upgradeFrom0to1();
-                break;
-            case 2:
-                upgradeFrom1to2();
-                break;
+        for (int i = 1; i <= version; i++) {
+            switch (i) {
+                case 1:
+                    upgradeFrom0to1();
+                    break;
+                case 2:
+                    upgradeFrom1to2();
+                    break;
+            }
         }
     }
 
     private void upgradeFrom0to1() {
-        PreferencesUtils.setString(R.string.stats_custom_layouts_key, PreferencesUtils.buildDefaultLayout());
+        String preferenceValue = PreferencesUtils.getString(R.string.stats_custom_layouts_key, "");
+        if (preferenceValue.isEmpty()) {
+            PreferencesUtils.setString(R.string.stats_custom_layouts_key, PreferencesUtils.buildDefaultLayout());
+        }
     }
 
     private void upgradeFrom1to2() {
-        String csvVersion1CustomLayout = PreferencesUtils.getString(R.string.stats_custom_layouts_key, "");
-        String preferenceValue;
-        if (!csvVersion1CustomLayout.isEmpty()) {
-            ArrayList<String> parts = new ArrayList<>();
-            Collections.addAll(parts, csvVersion1CustomLayout.split(CsvConstants.ITEM_SEPARATOR));
+        String csvVersion1CustomLayout = PreferencesUtils.getString(R.string.stats_custom_layouts_key, PreferencesUtils.buildDefaultLayout());
+        ArrayList<String> parts = new ArrayList<>();
+        Collections.addAll(parts, csvVersion1CustomLayout.split(CsvConstants.ITEM_SEPARATOR));
+        if (!parts.get(1).matches("\\d+")) {
             parts.add(1, String.valueOf(PreferencesUtils.getLayoutColumnsByDefault()));
-            preferenceValue = parts.stream().collect(Collectors.joining(CsvConstants.ITEM_SEPARATOR));
-        } else {
-            preferenceValue = PreferencesUtils.buildDefaultLayout();
         }
-        PreferencesUtils.setString(R.string.stats_custom_layouts_key, preferenceValue);
+        PreferencesUtils.setString(R.string.stats_custom_layouts_key, parts.stream().collect(Collectors.joining(CsvConstants.ITEM_SEPARATOR)));
     }
 }

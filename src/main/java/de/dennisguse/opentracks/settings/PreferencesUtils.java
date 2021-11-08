@@ -640,6 +640,10 @@ public class PreferencesUtils {
         return layouts;
     }
 
+    public static List<String> getAllCustomLayoutProfiles() {
+        return getAllCustomLayouts().stream().map(Layout::getProfile).collect(Collectors.toList());
+    }
+
     public static void resetCustomLayoutPreferences() {
         if (sharedPreferences.contains(resources.getString(R.string.stats_custom_layouts_key))) {
             SharedPreferences.Editor editor = sharedPreferences.edit();

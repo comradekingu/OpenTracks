@@ -263,7 +263,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.track_detail_menu_select_layout) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            List<String> profiles = PreferencesUtils.getAllCustomLayouts().stream().map(Layout::getProfile).collect(Collectors.toList());
+            List<String> profiles = PreferencesUtils.getAllCustomLayoutProfiles();
             builder.setTitle(getString(R.string.custom_layout_select_layout)).setItems(profiles.toArray(new String[0]), (dialog, which) -> PreferencesUtils.setDefaultLayout(profiles.get(which)));
             builder.create().show();
             return true;

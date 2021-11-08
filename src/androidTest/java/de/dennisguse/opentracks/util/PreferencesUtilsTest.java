@@ -231,31 +231,31 @@ public class PreferencesUtilsTest {
         // update all custom layouts
 
         // given a custom layout with two profiles
-        String cyclingProfile = "cycling" + CsvConstants.ITEM_SEPARATOR + "2" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_moving_time_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_distance_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_speed_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR;
+        String cyclingProfile = "cycling;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",1,1;";
 
-        String runningProfile = "running" + CsvConstants.ITEM_SEPARATOR + "2" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_moving_time_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_distance_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_average_pace_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_pace_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR;
+        String runningProfile = "running;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_pace_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_pace_key) + ",0,0;";
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + CsvConstants.LINE_SEPARATOR + runningProfile);
+        editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + "\n" + runningProfile);
         editor.apply();
 
         List<Layout> layoutsBefore = PreferencesUtils.getAllCustomLayouts();
 
         // when cyling profile is updated
-        String cyclingProfileUpdated = "cycling" + CsvConstants.ITEM_SEPARATOR + "2" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_moving_time_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_distance_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_speed_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR;
+        String cyclingProfileUpdated = "cycling;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0;";
 
         List<Layout> layoutsToBeUpdated = new ArrayList<>();
         layoutsToBeUpdated.add(Layout.fromCsv(cyclingProfileUpdated, resources));
@@ -278,31 +278,31 @@ public class PreferencesUtilsTest {
         // Update only one custom layout
 
         // given a custom layout with two profiles
-        String cyclingProfile = "cycling" + CsvConstants.ITEM_SEPARATOR + "2" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_moving_time_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_distance_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_speed_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR;
+        String cyclingProfile = "cycling;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",1,1;";
 
-        String runningProfile = "running" + CsvConstants.ITEM_SEPARATOR + "2" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_moving_time_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_distance_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_average_pace_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_pace_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR;
+        String runningProfile = "running;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_pace_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_pace_key) + ",0,0;";
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + CsvConstants.LINE_SEPARATOR + runningProfile);
+        editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + "\n" + runningProfile);
         editor.apply();
 
         List<Layout> layoutsBefore = PreferencesUtils.getAllCustomLayouts();
 
         // when cyling profile is updated
-        String cyclingProfileUpdated = "cycling" + CsvConstants.ITEM_SEPARATOR + "2" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_moving_time_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_distance_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_speed_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR;
+        String cyclingProfileUpdated = "cycling;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0;";
         Layout layoutToBeUpdated = Layout.fromCsv(cyclingProfileUpdated, resources);
         PreferencesUtils.updateCustomLayout(layoutToBeUpdated);
 
@@ -319,21 +319,21 @@ public class PreferencesUtilsTest {
     @Test
     public void testGetCustomLayout_whenSelectedOneNotExists() {
         // given a custom layout with two profiles and not existing custom layout selected
-        String cyclingProfile = "cycling" + CsvConstants.ITEM_SEPARATOR + "2" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_moving_time_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_distance_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_speed_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR;
+        String cyclingProfile = "cycling;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",1,1;";
 
-        String runningProfile = "running" + CsvConstants.ITEM_SEPARATOR + "2" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_moving_time_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_distance_key) + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.PROPERTY_SEPARATOR + "1" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_average_pace_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR
-                + context.getString(R.string.stats_custom_layout_pace_key) + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.PROPERTY_SEPARATOR + "0" + CsvConstants.ITEM_SEPARATOR;
+        String runningProfile = "running;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_pace_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_pace_key) + ",0,0;";
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + CsvConstants.LINE_SEPARATOR + runningProfile);
+        editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + "\n" + runningProfile);
         editor.putString(context.getString(R.string.stats_custom_layout_selected_profile_key), "Not Exists");
         editor.apply();
 

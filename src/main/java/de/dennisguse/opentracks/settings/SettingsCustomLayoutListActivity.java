@@ -91,7 +91,7 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
         RecyclerViewSwipeDeleteCallback recyclerViewSwipeDeleteCallback = new RecyclerViewSwipeDeleteCallback(this) {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                // When there's only one profile it cannot be deleted (so, "disable" movements: drag flagas and swipe flags).
+                // When there's only one profile it cannot be deleted (so, "disable" movements: drag flags and swipe flags).
                 return adapter.getItemCount() > 1 ? makeMovementFlags(0, ItemTouchHelper.LEFT) : makeMovementFlags(0, 0);
             }
 
