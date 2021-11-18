@@ -71,6 +71,9 @@ public abstract class BluetoothConnectionManager<DataType> {
                     Log.d(TAG, "Disconnected from sensor: " + gatt.getDevice());
 
                     clearData();
+                    if (!gatt.connect()) {
+                        Log.e(TAG, "Trying to restart connection failed for sensor: " + gatt.getDevice());
+                    }
                     break;
             }
         }
