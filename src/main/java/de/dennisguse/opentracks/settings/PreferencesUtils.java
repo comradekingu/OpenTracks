@@ -73,7 +73,7 @@ public class PreferencesUtils {
         PreferencesUtils.resources = resources;
         PreferencesUtils.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        PreferencesOpenHelper.newInstance(PREFERENCES_VERSION).checkForUpgrade();
+        PreferencesOpenHelper.newInstance(PREFERENCES_VERSION).check();
     }
 
     public static void registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {

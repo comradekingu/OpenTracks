@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 
 import androidx.preference.PreferenceManager;
 import androidx.test.core.app.ApplicationProvider;
@@ -22,6 +23,7 @@ import de.dennisguse.opentracks.content.data.Layout;
 public class PreferencesOpenHelperTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
+    private final Resources resources = ApplicationProvider.getApplicationContext().getResources();
 
     @Test
     public void test_upgradeFrom0To1_withoutStatsCustomLayouts() {
@@ -33,7 +35,7 @@ public class PreferencesOpenHelperTest {
         editor.commit();
 
         // when update to version 1
-        PreferencesOpenHelper.newInstance(1).checkForUpgrade();
+        PreferencesOpenHelper.newInstance(1).check();
 
         // then there should be one layout with old custom layout that has the new CSV value.
         List<Layout> layouts = PreferencesUtils.getAllCustomLayouts();
@@ -55,7 +57,7 @@ public class PreferencesOpenHelperTest {
         editor.commit();
 
         // when update to version 2
-        PreferencesOpenHelper.newInstance(2).checkForUpgrade();
+        PreferencesOpenHelper.newInstance(2).check();
 
         String updatedOldCustomLayoutCsv = context.getString(R.string.activity_type_unknown) + ";"
                 + PreferencesUtils.getLayoutColumnsByDefault() + ";distance,1,1,0;speed,1,1,0;";
@@ -80,7 +82,7 @@ public class PreferencesOpenHelperTest {
         editor.commit();
 
         // when update to version 2
-        PreferencesOpenHelper.newInstance(2).checkForUpgrade();
+        PreferencesOpenHelper.newInstance(2).check();
 
         String updatedOldCustomLayoutCsv = "whatever;3;distance,1,1,0;speed,1,1,0;";
 
@@ -89,5 +91,28 @@ public class PreferencesOpenHelperTest {
         assertNotNull(layouts);
         assertEquals(layouts.size(), 1);
         assertEquals(layouts.get(0).toCsv(), updatedOldCustomLayoutCsv);
+    }
+
+    @Test
+    public void test_downgrade() {
+        // given version 2
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String customLayoutCsv = "whatever;3;distance,1,1,0;speed,1,1,0;";
+        editor.putString(context.getString(R.string.stats_custom_layouts_key), customLayoutCsv);
+        editor.putInt(context.getString(R.string.prefs_last_version_key), 2);
+
+        editor.commit();
+
+        // when downgrade to version 1
+        PreferencesOpenHelper.newInstance(1).check();
+
+        // then custom layout should be equals to default layout.
+        Layout defaultLayout = Layout.fromCsv(PreferencesUtils.buildDefaultLayout(), resources);
+        List<Layout> customLayout = PreferencesUtils.getAllCustomLayouts();
+
+        assertEquals(customLayout.size(), 1);
+        assertEquals(defaultLayout.toCsv(), customLayout.get(0).toCsv());
     }
 }

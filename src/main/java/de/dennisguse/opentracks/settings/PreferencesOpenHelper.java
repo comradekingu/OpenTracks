@@ -19,10 +19,12 @@ class PreferencesOpenHelper {
         return new PreferencesOpenHelper(version);
     }
 
-    void checkForUpgrade() {
+    void check() {
         int lastVersion = PreferencesUtils.getInt(R.string.prefs_last_version_key, 0);
         if (version > lastVersion) {
             onUpgrade();
+        } else if (version < lastVersion) {
+            onDowngrade();
         }
     }
 
@@ -55,5 +57,9 @@ class PreferencesOpenHelper {
             parts.add(1, String.valueOf(PreferencesUtils.getLayoutColumnsByDefault()));
         }
         PreferencesUtils.setString(R.string.stats_custom_layouts_key, parts.stream().collect(Collectors.joining(CsvConstants.ITEM_SEPARATOR)));
+    }
+
+    private void onDowngrade() {
+        PreferencesUtils.setString(R.string.stats_custom_layouts_key, PreferencesUtils.buildDefaultLayout());
     }
 }
